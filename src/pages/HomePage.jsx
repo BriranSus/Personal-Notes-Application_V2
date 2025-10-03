@@ -1,20 +1,18 @@
 import React from 'react';
-import { getAllNotes } from '../utils/local-data';
+import { getAllNotes, getActiveNotes } from '../utils/local-data';
 import Navbar from '../components/Navbar';
+import NotesWrapper from '../components/HomeNotes/NotesWrapper'
 
 class HomePage extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            notes: getAllNotes(),
+            notes: getActiveNotes(),
         }
     }
     
     render() {
-        const { notes } = this.state;
-
-        const notesList = notes.filter((note) => !note.archived)
 
         return (
             <div className='app-container'>
@@ -23,7 +21,7 @@ class HomePage extends React.Component {
                 <main>
                     <h1>Catatan Aktif</h1>
                     <p>Search bar sementara</p>
-                    <NotesWrapper notes={notesList}/>
+                    <NotesWrapper notes={this.state.notes}/>
                 </main>  
             </div> 
         )

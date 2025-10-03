@@ -1,5 +1,7 @@
+import ItemNote from './ItemNote';
+
 function NotesWrapper({ notes }) {
-    const notesCount = notes.length
+    const notesCount = notes.length;
 
     return (
         <>
@@ -7,15 +9,14 @@ function NotesWrapper({ notes }) {
                 (notesCount != 0) ? 
                 <div className="notes-list">
                     {
-                        notes.map((note) => {
+                        notes.map((note) => (
                             <ItemNote key={note.id} id={note.id} {...note}/>
-                        })
+                        ))
                     }
                 </div> : 
                 <div className="notes-list-empty">
                     <p>There is no notes</p>    
                 </div>
-                
             }
         </>   
     )
