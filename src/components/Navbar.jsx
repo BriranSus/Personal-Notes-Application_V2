@@ -1,10 +1,12 @@
+import { Link } from 'react-router-dom'
+
 function Navbar() {
     return (
         <header>
-            <h1>Aplikasi Catatan</h1>
+            <h1><Link to="/">Aplikasi Catatan</Link></h1>
             <div className='navigation'>
                 <ul>
-                    <li>Arsip</li>
+                    <li><Link to="/Archive">Arsip</Link></li>
                 </ul>
             </div>
         </header>
