@@ -2,6 +2,8 @@ import React from 'react';
 import { getAllNotes, getActiveNotes } from '../utils/local-data';
 import Navbar from '../components/Navbar';
 import NotesWrapper from '../components/HomeNotes/NotesWrapper'
+import { FaPlus } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -23,6 +25,12 @@ class HomePage extends React.Component {
                     <p>Search bar sementara</p>
                     <NotesWrapper notes={this.state.notes}/>
                 </main>  
+
+                <div className='homepage__action'>
+                    <button className='action'>
+                        <Link to="/Notes/new"><FaPlus size={24} color="black"/></Link>
+                    </button>
+                </div>
             </div> 
         )
         

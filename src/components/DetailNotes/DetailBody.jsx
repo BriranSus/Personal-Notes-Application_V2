@@ -1,6 +1,8 @@
+import parser from 'html-react-parser'
+
 function DetailBody({ body }) {
     return (
-        <p className="detail-page__body">{body}</p>
+        <div className="detail-page__body">{parser(body)}</div>
     )
 }
 

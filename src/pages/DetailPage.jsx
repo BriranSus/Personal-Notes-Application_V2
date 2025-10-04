@@ -19,7 +19,9 @@ class DetailPage extends React.Component{
     }
 
     render() {
-        if (this.state.noteDetail === null){
+        const { noteDetail } = this.state;
+
+        if (!noteDetail){
             return <p>Note is not found</p>;
         }
 
@@ -28,7 +30,7 @@ class DetailPage extends React.Component{
                 <Navbar></Navbar>
 
                 <main>
-                    <ItemDetail {...this.state.noteDetail}/>    
+                    <ItemDetail {...noteDetail}/>    
                 </main>
                 
             </div>
