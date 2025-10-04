@@ -2,8 +2,20 @@ import React from 'react';
 import { getAllNotes, getArchivedNotes } from '../utils/local-data';
 import Navbar from '../components/Navbar';
 import NotesWrapper from '../components/HomeNotes/NotesWrapper'
-import { FaPlus } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+import SearchBar from '../components/SearchBar';
+
+function ArchivePageWrapper() {
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const keyword = searchParams.get('keyword');
+
+    function changeSearchParams(keyword){
+        setSearchParams({ keyword })
+    }
+
+    return <ArchivePage defaultKeyword={keyword} keywordChange={changeSearchParams}/>
+}
 
 class ArchivePage extends React.Component {
     constructor(props) {
@@ -11,10 +23,29 @@ class ArchivePage extends React.Component {
 
         this.state = {
             notes: getArchivedNotes(),
+            keyword: props.defaultKeyword || '',
         }
+
+        this.onKeywordChangeHandler = this.onKeywordChangeHandler.bind(this);
+    }
+
+    onKeywordChangeHandler(keyword){
+        this.setState(() => {
+            return {
+                keyword,
+            }
+        });
+
+        this.props.keywordChange(keyword);
     }
     
     render() {
+
+        const notes = this.state.notes.filter((note) => {
+            return note.title.toLowerCase().includes(
+                this.state.keyword.toLowerCase()
+            )
+        })
 
         return (
             <div className='app-container'>
@@ -22,8 +53,8 @@ class ArchivePage extends React.Component {
 
                 <main>
                     <h1>Catatan Arsip</h1>
-                    <p>Search bar sementara</p>
-                    <NotesWrapper notes={this.state.notes}/>
+                    <SearchBar keyword={this.state.keyword} keywordChange={this.onKeywordChangeHandler}/>
+                    <NotesWrapper notes={notes}/>
                 </main>  
             </div> 
         )
@@ -31,4 +62,4 @@ class ArchivePage extends React.Component {
     }
 }
 
-export default ArchivePage;
+export default ArchivePageWrapper;
