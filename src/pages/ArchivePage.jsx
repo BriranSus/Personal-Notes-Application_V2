@@ -25,12 +25,6 @@ class ArchivePage extends React.Component {
                     <p>Search bar sementara</p>
                     <NotesWrapper notes={this.state.notes}/>
                 </main>  
-
-                <div className='homepage__action'>
-                    <button className='action'>
-                        <Link to="/Notes/new"><FaPlus size={24} color="black"/></Link>
-                    </button>
-                </div>
             </div> 
         )
         

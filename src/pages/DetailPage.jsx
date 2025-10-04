@@ -1,10 +1,11 @@
 import { useParams } from 'react-router-dom';
 import React from 'react';
-import { getNote, deleteNote } from '../utils/local-data';
+import { getNote, deleteNote, archiveNote, unarchiveNote } from '../utils/local-data';
 import ItemDetail from '../components/DetailNotes/ItemDetail';
 import Navbar from '../components/Navbar';
 import DeleteButton from '../components/DeleteButton';
 import { useNavigate } from 'react-router-dom';
+import ArchiveButton from '../components/ArchiveButton';
 
 function DetailPageWrapper(){
     const { id } = useParams();
@@ -21,11 +22,22 @@ class DetailPage extends React.Component{
         }
         
         this.onDeleteHandler = this.onDeleteHandler.bind(this);
-
+        this.onArchiveHandler = this.onArchiveHandler.bind(this);
+        this.onUnarchiveHandler = this.onUnarchiveHandler.bind(this);
     }
 
     onDeleteHandler(id){
         deleteNote(id);
+        this.props.navigate("/");
+    }
+
+    onArchiveHandler(id){
+        archiveNote(id);
+        this.props.navigate("/");
+    }
+
+    onUnarchiveHandler(id){
+        unarchiveNote(id);
         this.props.navigate("/");
     }
 
@@ -45,6 +57,9 @@ class DetailPage extends React.Component{
                 </main>
 
                 <div className='detail-page__action'>
+                    <button className='action'>
+                        <ArchiveButton id={this.props.id} onArchive={this.onArchiveHandler} archived={this.state.noteDetail.archived} onUnarchive={this.onUnarchiveHandler}></ArchiveButton>
+                    </button>
                     <button className='action' >
                         <DeleteButton id={this.props.id} onDelete={this.onDeleteHandler}></DeleteButton>
                     </button>
