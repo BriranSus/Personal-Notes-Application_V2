@@ -1,6 +1,6 @@
 import Navbar from '../components/Navbar'
 
-function ErrorPage() {
+function NotFoundPage() {
     return (
         <div className="app-container">
             <Navbar></Navbar>
@@ -12,4 +12,4 @@ function ErrorPage() {
     )
 }
 
-export default ErrorPage;
+export default NotFoundPage;

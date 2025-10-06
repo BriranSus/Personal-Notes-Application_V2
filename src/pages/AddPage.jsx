@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { addNote } from '../utils/local-data';
+import { addNote } from '../utils/network-data';
 import Navbar from '../components/Navbar';
 import NoteInput from '../components/AddNotes/NoteInput';
 

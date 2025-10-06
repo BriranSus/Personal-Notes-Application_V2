@@ -4,17 +4,35 @@ import HomePage from './pages/HomePage';
 import DetailPage from './pages/DetailPage';
 import AddPage from './pages/AddPage';
 import ArchivePage from './pages/ArchivePage';
-import ErrorPage from './pages/ErrorPage';
+import LoginPage from './pages/LoginPage';
+import NotFoundPage from './pages/NotFoundPage';
+import { putAccessToken } from './utils/network-data'
 
 function App() {
+  const [authedUser, setAuthedUser] = useState(null);
+
+  function onLoginSuccess({ accessToken }){
+    putAccessToken(accessToken);
+    setAuthedUser(true)
+  }
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomePage/>}></Route>
-        <Route path="/Notes/new" element={<AddPage/>}></Route>
-        <Route path="/Notes/:id" element={<DetailPage/>}></Route>
-        <Route path="/Archive" element={<ArchivePage/>}></Route>
-        <Route path="*" element={<ErrorPage />}></Route>
+        {!authedUser ? (
+          <>
+            <Route path="/login" element={<LoginPage loginSuccess={onLoginSuccess}/>}/>
+            <Route path="*" element={<LoginPage loginSuccess={onLoginSuccess}/>}/>
+          </>
+        ) : (
+          <>
+            <Route path="/" element={<HomePage/>}></Route>
+            <Route path="/Notes/new" element={<AddPage/>}></Route>
+            <Route path="/Notes/:id" element={<DetailPage/>}></Route>
+            <Route path="/Archive" element={<ArchivePage/>}></Route>
+            <Route path="*" element={<NotFoundPage />}></Route>
+          </>
+        )}
       </Routes>
     </BrowserRouter>
   );

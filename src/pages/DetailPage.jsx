@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import React from 'react';
-import { getNote, deleteNote, archiveNote, unarchiveNote } from '../utils/local-data';
+import { getNote, deleteNote, archiveNote, unarchiveNote } from '../utils/network-data';
 import ItemDetail from '../components/DetailNotes/ItemDetail';
 import Navbar from '../components/Navbar';
 import DeleteButton from '../components/DeleteButton';

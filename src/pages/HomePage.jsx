@@ -1,5 +1,5 @@
 import React from 'react';
-import { getActiveNotes } from '../utils/local-data';
+import { getActiveNotes } from '../utils/network-data';
 import Navbar from '../components/Navbar';
 import NotesWrapper from '../components/HomeNotes/NotesWrapper'
 import { FaPlus } from 'react-icons/fa';

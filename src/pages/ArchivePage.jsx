@@ -1,5 +1,5 @@
 import React from 'react';
-import { getAllNotes, getArchivedNotes } from '../utils/local-data';
+import { getAllNotes, getArchivedNotes } from '../utils/network-data';
 import Navbar from '../components/Navbar';
 import NotesWrapper from '../components/HomeNotes/NotesWrapper'
 import { useSearchParams } from 'react-router-dom';
