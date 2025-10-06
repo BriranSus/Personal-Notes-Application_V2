@@ -6,6 +6,8 @@ function LoginPage({ loginSuccess }) {
         
         if (!error){
             loginSuccess(data);
+        } else {
+            alert('Login failed, please check your email and password.')
         }
     }
 
