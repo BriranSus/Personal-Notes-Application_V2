@@ -1,6 +1,6 @@
-import DetailTitle from "./DetailTitle";
-import DetailDate from "./DetailDate";
-import DetailBody from "./DetailBody";
+import DetailTitle from './DetailTitle';
+import DetailDate from './DetailDate';
+import DetailBody from './DetailBody';
 
 function ItemDetail({ title, createdAt, body }) {
     return (

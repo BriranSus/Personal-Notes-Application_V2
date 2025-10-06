@@ -1,7 +1,7 @@
-import { useNavigate } from "react-router-dom";
-import { addNote } from "../utils/local-data";
+import { useNavigate } from 'react-router-dom';
+import { addNote } from '../utils/local-data';
 import Navbar from '../components/Navbar';
-import NoteInput from "../components/AddNotes/NoteInput";
+import NoteInput from '../components/AddNotes/NoteInput';
 
 function AddPage() {
     const navigate = useNavigate();

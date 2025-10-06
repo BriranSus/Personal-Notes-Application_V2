@@ -1,4 +1,4 @@
-import { showFormattedDate } from "../../utils";
+import { showFormattedDate } from '../../utils';
 
 function DetailDate({ createdAt }){
     const date = showFormattedDate(createdAt)

@@ -1,5 +1,5 @@
-import { FaUpload } from "react-icons/fa";
-import { FaDownload } from "react-icons/fa";
+import { FaUpload } from 'react-icons/fa';
+import { FaDownload } from 'react-icons/fa';
 
 function ArchiveButton({ id, onArchive, archived, onUnarchive }) {
     return (
