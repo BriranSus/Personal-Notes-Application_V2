@@ -7,6 +7,7 @@ import ArchivePage from './pages/ArchivePage';
 import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
 import { putAccessToken } from './utils/network-data'
+import RegisterPage from './pages/RegisterPage';
 
 function App() {
   const [authedUser, setAuthedUser] = useState(null);
@@ -23,6 +24,7 @@ function App() {
           <>
             <Route path="/login" element={<LoginPage loginSuccess={onLoginSuccess}/>}/>
             <Route path="*" element={<LoginPage loginSuccess={onLoginSuccess}/>}/>
+            <Route path='/register' element={<RegisterPage />}/>
           </>
         ) : (
           <>
