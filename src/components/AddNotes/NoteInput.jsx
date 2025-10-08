@@ -2,80 +2,53 @@ import React from 'react';
 import { showFormattedDate } from '../../utils';
 import { FaCheck } from 'react-icons/fa';
 
-class NoteInput extends React.Component {
-    constructor(props){
-        super(props)
+function NoteInput({ noteAdd }) {
+    const [title, setTitle] = useState('')
+    const [body, setBody] = useState('')
 
-        this.state = {
-            id: '',
-            title: '',
-            body: '',
-            archived: '',
-            createdAt: '',
-        }
-
-        this.onTitleChangeEventHandler = this.onTitleChangeEventHandler.bind(this);
-        this.onBodyChangeEventHandler = this.onBodyChangeEventHandler.bind(this);
-        this.onSubmitEventHandler = this.onSubmitEventHandler.bind(this);
+    const onTitleChangeEventHandler = (event) => {
+        setTitle(event.target.value)
     }
 
-    onTitleChangeEventHandler(event){
-        this.setState(() => {
-            return {
-                title: event.target.value,
-            }
-        });
+    const onBodyChangeEventHandler = (event) => {
+        setBody(event.target.innerHTML)
     }
 
-    onBodyChangeEventHandler(event){
-        this.setState(() => {
-            return {
-                body: event.target.innerHTML,
-            }
-        })
-    }
-
-    onSubmitEventHandler(event){
+    const onSubmitEventHandler = (event) => {
         event.preventDefault();
-        const { title, body } = this.state;
-        this.props.noteAdd({ title, body });
-        this.setState({
-            id: '',
-            title: '',
-            body: '',
-            archived: '',
-            createdAt: '',
-        });
+        
+        noteAdd({ title, body })
+        setTitle('')
+        setBody('')
+        event.target.querySelector('.add-new-page__input__body').innerHTML = '';
     }
 
-    render() {
-        return (
-            <main>
-                <div className='add-new-page__input'>
-                    <form action="" onSubmit={this.onSubmitEventHandler}>
+    return (
+        <main>
+            <div className='add-new-page__input'>
+                <form action="" onSubmit={onSubmitEventHandler}>
                         <input 
-                            className='add-new-page__input__title'
-                            placeholder="Tambahkan Catatan"
-                            value={this.state.title}
-                            onChange={this.onTitleChangeEventHandler}
-                            required>
-                        </input>
-                        <div
-                            className="add-new-page__input__body"
-                            data-placeholder="Menurut pendapat saya ..."
-                            contentEditable
-                            onInput={this.onBodyChangeEventHandler}
-                        />    
-                        <div className='add-new-page__action'>
-                            <button type="submit" className='action'>
-                                <FaCheck></FaCheck>
-                            </button>    
-                        </div>     
-                    </form>
-                </div>      
-            </main>
-        )
-    }
+                    className='add-new-page__input__title'
+                        placeholder="Tambahkan Catatan"
+                        value={this.state.title}
+                        onChange={onTitleChangeEventHandler}
+                        required>
+                    </input>
+                    <div
+                        className="add-new-page__input__body"
+                        data-placeholder="Menurut pendapat saya ..."
+                        contentEditable
+                        onInput={onBodyChangeEventHandler}
+                    />    
+                    <div className='add-new-page__action'>
+                        <button type="submit" className='action'>
+                            <FaCheck></FaCheck>
+                        </button>    
+                    </div>     
+                </form>
+            </div>      
+        </main>
+    )
 }
 
 export default NoteInput;

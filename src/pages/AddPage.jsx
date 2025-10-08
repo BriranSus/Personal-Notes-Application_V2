@@ -6,9 +6,22 @@ import NoteInput from '../components/AddNotes/NoteInput';
 function AddPage() {
     const navigate = useNavigate();
 
-    function onAddNotesHandler({ title, body }){
-        addNote({ title, body });
-        navigate("/");
+    // function onAddNotesHandler({ title, body }){
+    //     addNote({ title, body });
+    //     navigate("/");
+    // }
+
+    const [title, setTitle] = useState('');
+    const [body, setBody] = useState('');
+    
+
+    async function onAddNotesHandler(note){
+        const { error } = await addNote(note);
+        if (!error){
+            navigate('/');
+        }else{
+            alert('Gagal menambahkan catatan');
+        }
     }
 
     return (
