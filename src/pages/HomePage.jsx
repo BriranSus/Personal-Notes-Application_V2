@@ -1,73 +1,92 @@
-import React from 'react';
 import { getActiveNotes } from '../utils/network-data';
 import Navbar from '../components/Navbar';
 import NotesWrapper from '../components/HomeNotes/NotesWrapper'
 import { FaPlus } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 
-function HomePageWrapper() {
+function HomePage() {
+    const [notes, setNotes] = useState([]);
+    const [keyword, setKeyword] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const keyword = searchParams.get('keyword');
+    // sync URL keyword param
+    useEffect(() => {
+        const keywordParam = searchParams.get('keyword') || '';
+        setKeyword(keywordParam);
+    }, [searchParams]);
 
-    function changeSearchParams(keyword){
-        setSearchParams({ keyword })
-    }
+    // fetch notes on mount
+    useEffect(() => {
+        async function fetchNotes() {
+        setLoading(true);
+        const { error, data } = await getActiveNotes();
 
-    return <HomePage defaultKeyword={keyword} keywordChange={changeSearchParams}/>
-}
-
-class HomePage extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            notes: getActiveNotes(),
-            keyword: props.defaultKeyword || '',
+        if (!error) {
+            setNotes(data);
+            setLoading(false);
+        } else {
+            setError('Gagal memuat catatan');
+            setLoading(false);
+        }
         }
 
-        this.onKeywordChangeHandler = this.onKeywordChangeHandler.bind(this);
+        fetchNotes();
+    }, []);
+
+    function onKeywordChangeHandler(newKeyword) {
+        setKeyword(newKeyword);
+        setSearchParams({ keyword: newKeyword });
     }
 
-    onKeywordChangeHandler(keyword){
-        this.setState(() => {
-            return {
-                keyword,
-            }
-        });
+    const Notes = notes.filter((note) =>
+        note.title.toLowerCase().includes(keyword.toLowerCase())
+    );
 
-        this.props.keywordChange(keyword);
-    }
-    
-    render() {
-
-        const notes = this.state.notes.filter((note) => {
-            return note.title.toLowerCase().includes(
-                this.state.keyword.toLowerCase()
-            )
-        })
-
+    if (loading) {
         return (
-            <div className='app-container'>
-                <Navbar/>
-
-                <main>
-                    <h1>Catatan Aktif</h1>
-                    <SearchBar keyword={this.state.keyword} keywordChange={this.onKeywordChangeHandler}/>
-                    <NotesWrapper notes={notes}/>
-                </main>  
-
-                <div className='homepage__action'>
-                    <button className='action'>
-                        <Link to="/Notes/new"><FaPlus size={24} color="black"/></Link>
-                    </button>
-                </div>
-            </div> 
-        )
-        
+        <div className="app-container">
+            <Navbar />
+            <main>
+            <h1>Catatan Aktif</h1>
+            <p>Memuat catatan...</p>
+            </main>
+        </div>
+        );
     }
+
+    if (error) {
+        return (
+        <div className="app-container">
+            <Navbar />
+            <main>
+            <h1>Catatan Aktif</h1>
+            <p>{error}</p>
+            </main>
+        </div>
+        );
+    }
+
+    return (
+        <div className="app-container">
+        <Navbar />
+        <main>
+            <h1>Catatan Aktif</h1>
+            <SearchBar keyword={keyword} keywordChange={onKeywordChangeHandler} />
+            <NotesWrapper notes={Notes} />
+        </main>
+
+        <div className="homepage__action">
+            <button className="action">
+            <Link to="/Notes/new">
+                <FaPlus size={24} color="black" />
+            </Link>
+            </button>
+        </div>
+        </div>
+    );
 }
 
-export default HomePageWrapper;
+export default HomePage;
