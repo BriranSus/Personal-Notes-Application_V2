@@ -12,13 +12,11 @@ function HomePage() {
     const [error, setError] = useState(null);
     const [searchParams, setSearchParams] = useSearchParams();
 
-    // sync URL keyword param
     useEffect(() => {
         const keywordParam = searchParams.get('keyword') || '';
         setKeyword(keywordParam);
     }, [searchParams]);
 
-    // fetch notes on mount
     useEffect(() => {
         async function fetchNotes() {
         setLoading(true);

@@ -1,65 +1,82 @@
 import React from 'react';
-import { getAllNotes, getArchivedNotes } from '../utils/network-data';
+import { getArchivedNotes } from '../utils/network-data';
 import Navbar from '../components/Navbar';
 import NotesWrapper from '../components/HomeNotes/NotesWrapper'
 import { useSearchParams } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 
-function ArchivePageWrapper() {
+function ArchivePage() {
+    const [notes, setNotes] = useState([]);
+    const [keyword, setKeyword] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const keyword = searchParams.get('keyword');
+    useEffect(() => {
+        const keywordParam = searchParams.get('keyword') || '';
+        setKeyword(keywordParam);
+    }, [searchParams]);
 
-    function changeSearchParams(keyword){
-        setSearchParams({ keyword })
-    }
+    useEffect(() => {
+        async function fetchArchivedNotes() {
+        setLoading(true);
+        const { error, data } = await getArchivedNotes();
 
-    return <ArchivePage defaultKeyword={keyword} keywordChange={changeSearchParams}/>
-}
-
-class ArchivePage extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            notes: getArchivedNotes(),
-            keyword: props.defaultKeyword || '',
+        if (!error) {
+            setNotes(data);
+            setLoading(false);
+        } else {
+            setError('Gagal memuat catatan arsip');
+            setLoading(false);
+        }
         }
 
-        this.onKeywordChangeHandler = this.onKeywordChangeHandler.bind(this);
+        fetchArchivedNotes();
+    }, []);
+
+    function onKeywordChangeHandler(newKeyword) {
+        setKeyword(newKeyword);
+        setSearchParams({ keyword: newKeyword });
     }
 
-    onKeywordChangeHandler(keyword){
-        this.setState(() => {
-            return {
-                keyword,
-            }
-        });
+    const Notes = notes.filter((note) =>
+        note.title.toLowerCase().includes(keyword.toLowerCase())
+    );
 
-        this.props.keywordChange(keyword);
-    }
-    
-    render() {
-
-        const notes = this.state.notes.filter((note) => {
-            return note.title.toLowerCase().includes(
-                this.state.keyword.toLowerCase()
-            )
-        })
-
+    if (loading) {
         return (
-            <div className='app-container'>
-                <Navbar/>
-
-                <main>
-                    <h1>Catatan Arsip</h1>
-                    <SearchBar keyword={this.state.keyword} keywordChange={this.onKeywordChangeHandler}/>
-                    <NotesWrapper notes={notes}/>
-                </main>  
-            </div> 
-        )
-        
+        <div className="app-container">
+            <Navbar />
+            <main>
+            <h1>Catatan Arsip</h1>
+            <p>Memuat catatan arsip...</p>
+            </main>
+        </div>
+        );
     }
+
+    if (error) {
+        return (
+        <div className="app-container">
+            <Navbar />
+            <main>
+            <h1>Catatan Arsip</h1>
+            <p>{error}</p>
+            </main>
+        </div>
+        );
+    }
+
+    return (
+        <div className="app-container">
+        <Navbar />
+        <main>
+            <h1>Catatan Arsip</h1>
+            <SearchBar keyword={keyword} keywordChange={onKeywordChangeHandler} />
+            <NotesWrapper notes={Notes} />
+        </main>
+        </div>
+    );
 }
 
-export default ArchivePageWrapper;
+export default ArchivePage;
