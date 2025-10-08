@@ -4,6 +4,7 @@ import NotesWrapper from '../components/HomeNotes/NotesWrapper'
 import { FaPlus } from 'react-icons/fa';
 import { Link, useSearchParams } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
+import { useState, useEffect } from 'react'
 
 function HomePage() {
     const [notes, setNotes] = useState([]);

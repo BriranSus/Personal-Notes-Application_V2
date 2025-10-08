@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import DetailPage from './pages/DetailPage';
@@ -8,6 +7,7 @@ import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
 import { putAccessToken } from './utils/network-data'
 import RegisterPage from './pages/RegisterPage';
+import { useState } from 'react';
 
 function App() {
   const [authedUser, setAuthedUser] = useState(null);

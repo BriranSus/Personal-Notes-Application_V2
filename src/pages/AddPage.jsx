@@ -2,21 +2,13 @@ import { useNavigate } from 'react-router-dom';
 import { addNote } from '../utils/network-data';
 import Navbar from '../components/Navbar';
 import NoteInput from '../components/AddNotes/NoteInput';
+import { useState } from 'react';
 
 function AddPage() {
     const navigate = useNavigate();
 
-    // function onAddNotesHandler({ title, body }){
-    //     addNote({ title, body });
-    //     navigate("/");
-    // }
-
-    const [title, setTitle] = useState('');
-    const [body, setBody] = useState('');
-    
-
-    async function onAddNotesHandler(note){
-        const { error } = await addNote(note);
+    async function onAddNotesHandler({ title, body }){
+        const { error } = await addNote({ title, body });
         if (!error){
             navigate('/');
         }else{

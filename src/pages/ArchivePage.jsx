@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { getArchivedNotes } from '../utils/network-data';
 import Navbar from '../components/Navbar';
 import NotesWrapper from '../components/HomeNotes/NotesWrapper'

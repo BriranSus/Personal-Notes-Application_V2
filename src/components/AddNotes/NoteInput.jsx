@@ -1,6 +1,5 @@
-import React from 'react';
-import { showFormattedDate } from '../../utils';
 import { FaCheck } from 'react-icons/fa';
+import { useState } from 'react';
 
 function NoteInput({ noteAdd }) {
     const [title, setTitle] = useState('')
@@ -30,7 +29,7 @@ function NoteInput({ noteAdd }) {
                         <input 
                     className='add-new-page__input__title'
                         placeholder="Tambahkan Catatan"
-                        value={this.state.title}
+                        value={title}
                         onChange={onTitleChangeEventHandler}
                         required>
                     </input>
