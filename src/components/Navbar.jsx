@@ -1,11 +1,13 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { getUserLogged } from '../utils/network-data';
 import { useEffect, useState } from 'react';
-import { FiLogOut } from 'react-icons/fi'; // logout icon
+import { FiLogOut, FiSun, FiMoon } from 'react-icons/fi'; 
+import { useTheme } from "./Theme"; 
 
 function Navbar() {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
+    const { theme, toggleTheme } = useTheme();
 
     useEffect(() => {
         async function fetchUser() {
@@ -31,6 +33,11 @@ function Navbar() {
         <div className="navigation">
             <ul>
             <li><Link to="/Archive">Terarsip</Link></li>
+            <li>
+                <button className="toggle-theme" onClick={toggleTheme}>
+                {theme === 'dark' ? <FiSun /> : <FiMoon />}
+                </button>
+            </li>
             <li>
                 {
                     token && (

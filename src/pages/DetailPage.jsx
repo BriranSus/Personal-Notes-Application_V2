@@ -14,7 +14,6 @@ function DetailPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Fetch note detail when component mounts
     useEffect(() => {
         async function fetchNoteDetail() {
         setLoading(true);

@@ -7,14 +7,16 @@ import ArchivePage from './pages/ArchivePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import NotFoundPage from './pages/NotFoundPage';
-import Navbar from './components/Navbar';
 import { getUserLogged, putAccessToken } from './utils/network-data';
+import { ThemeProvider } from './components/Theme';
 
 function App() {
   return (
-    <BrowserRouter>
-      <AppContent />
-    </BrowserRouter>
+    <ThemeProvider>
+      <BrowserRouter>
+        <AppContent />
+      </BrowserRouter>  
+    </ThemeProvider>
   );
 }
 
@@ -37,12 +39,6 @@ function AppContent() {
     const { error, data } = await getUserLogged();
     if (!error) setAuthedUser(data);
     navigate('/');
-  }
-
-  function onLogout() {
-    localStorage.removeItem('accessToken');
-    setAuthedUser(null);
-    navigate('/login');
   }
 
   if (initializing) return <p>Loading...</p>;

@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import { addNote } from '../utils/network-data';
 import Navbar from '../components/Navbar';
 import NoteInput from '../components/AddNotes/NoteInput';
-import { useState } from 'react';
 
 function AddPage() {
     const navigate = useNavigate();
